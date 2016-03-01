@@ -1,11 +1,13 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/lang',
-    'dojo/Deferred'
+    'dojo/Deferred',
+    'viewer/_ConfigMixinHelper'
 ], function (
     declare,
     lang,
-    Deferred
+    Deferred,
+    _ConfigMixinHelper
 ) {
     'use strict';
 
@@ -23,12 +25,14 @@ define([
                     file = 'config/' + file;
                 }
             }
-            require([file], function (config) {
+            require([file], function (config) {				
+                var paramItems = ['viewer', 'primos', 'primo_ids', 'primoids', 'eogsymbolize', 'primoSymbols', 'primosymbols', 'primo_symbols'],
+                    urlConfig = _ConfigMixinHelper._createUrlParamsObject(paramItems);
+                _ConfigMixinHelper._mixinDeep(config, urlConfig);
                 returnDeferred.resolve(config);
             });
             return returnDeferred;
         },
-
         initConfigSuccess: function (config) {
             this.config = config;
 

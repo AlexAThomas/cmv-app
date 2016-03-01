@@ -69,10 +69,25 @@ define([
             this.addTitles();
             this.detectTouchDevices();
             this.initPanes();
+            this.initModules();
+            /*$("#sidebarLeft").on("swipeleft", lang.hitch(this, function(event) {
+                this.toggleSidePanel('left');
+            }));*/
         },
-
+        initModules: function () {
+            for (var key in this.config.modules) {
+                if (this.config.modules.hasOwnProperty(key)) {
+                    var module = lang.clone(this.config.modules[key]);
+                    require([module.path]);
+                }
+            }
+        },
         // add topics for subscribing and publishing
         addTopics: function () {
+            // toggle a sidebar pane based on sidebar state
+            topic.subscribe('viewer/toggleSidePanel', lang.hitch(this, function () {
+                this.toggleSidePanel('left');
+            }));
             // toggle a sidebar pane
             topic.subscribe('viewer/togglePane', lang.hitch(this, function (args) {
                 this.toggleSidebar(args.pane, args.show);
@@ -203,9 +218,22 @@ define([
                     }
                 }
             }
-
         },
-
+        toggleSidePanel: function (id) {
+            if (!this.panes[id]) {
+                return;
+            }
+            var domNode = this.panes[id].domNode;
+            if (domNode) {
+                var disp = (domStyle.get(domNode, 'display') === 'none') ? 'block' : 'none';
+                this.togglePane(id, disp);
+                if (disp === 'block') {
+                    topic.publish('DispatchCommand', 'OverrideBackButton', {'mapCommand': 'ShowMap'});
+                } else {
+                    topic.publish('DispatchCommand', 'ResetBackButton');
+                }
+            }
+        },
         togglePane: function (id, show) {
             if (!this.panes[id]) {
                 return;

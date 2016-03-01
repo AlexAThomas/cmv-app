@@ -37,8 +37,13 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             // Should the control be visible or hidden?
-            if (this.control.controlOptions.layerIds && array.indexOf(this.control.controlOptions.layerIds, this.sublayerInfo.id) < 0) {
-                domClass.add(this.domNode, 'layerControlHidden');
+            if (this.control.controlOptions.subLayerInfos) {
+                var subLayerInfos = array.map(this.control.controlOptions.subLayerInfos, function (sli) {
+                    return sli.id;
+                });
+                if (array.indexOf(subLayerInfos, this.sublayerInfo.id) < 0) {
+                    domClass.add(this.domNode, 'layerControlHidden');
+                }
             }
             var checkNode = this.checkNode;
             domAttr.set(checkNode, 'data-sublayer-id', this.sublayerInfo.id);

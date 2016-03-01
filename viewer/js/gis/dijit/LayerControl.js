@@ -64,6 +64,7 @@ define([
         _controls: {
             dynamic: './LayerControl/controls/Dynamic',
             feature: './LayerControl/controls/Feature',
+            featuresFolder: './LayerControl/controls/FeaturesFolder',
             image: './LayerControl/controls/Image',
             tiled: './LayerControl/controls/Tiled',
             csv: './LayerControl/controls/CSV',
@@ -121,6 +122,10 @@ define([
             }
             this._addLayerControls(this.layerInfos);
             this._subscribeToTopics();
+        },
+        startup: function () {
+            this.inherited(arguments);
+            topic.publish('LayerControlReady');			
         },
         _subscribeToTopics: function () {
             this._removeLayerControlsHandler = topic.subscribe('layerControl/removeLayerControls', lang.hitch(this, function (layers) {

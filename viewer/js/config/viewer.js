@@ -4,8 +4,9 @@ define([
     'esri/config',
     /*'esri/urlUtils',*/
     'esri/tasks/GeometryService',
-    'esri/layers/ImageParameters'
-], function (units, Extent, esriConfig, /*urlUtils,*/ GeometryService, ImageParameters) {
+    'esri/layers/ImageParameters',
+    'config/environmentOverride'
+], function (units, Extent, esriConfig, /*urlUtils,*/ GeometryService, ImageParameters, environmentOverride) {
     'use strict';
 
     // url to your proxy page, must be on same machine hosting you app. See proxy folder for readme.
@@ -20,7 +21,7 @@ define([
     });*/
 
     // url to your geometry server.
-    esriConfig.defaults.geometryService = new GeometryService('http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer');
+    esriConfig.defaults.geometryService = new GeometryService(environmentOverride.GeometryServer);
 
     // helper function returning ImageParameters for dynamic layers
     // example:

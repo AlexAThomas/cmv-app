@@ -2,11 +2,14 @@ define([
     'dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/on',
+    'dojo/topic',
     'dojo/dom',
     'dojo/_base/array',
     'dojo/Deferred',
 
     'esri/map',
+
+    'viewer/_LayerControlOptionsHelper',
 
     'esri/IdentityManager'
 
@@ -14,11 +17,14 @@ define([
     declare,
     lang,
     on,
+    topic,
     dom,
     array,
     Deferred,
 
-    Map
+    Map,
+
+    _LayerControlOptionsHelper
 ) {
     'use strict';
     return declare(null, {
@@ -58,6 +64,7 @@ define([
         },
 
         _initLayers: function (returnWarnings) {
+            topic.publish('MapReady', this.map);
             this.layers = [];
             var layerTypes = {
                 csv: 'CSV',
@@ -158,6 +165,11 @@ define([
                 }
                 if (idOptions.exclude !== true) {
                     this.identifyLayerInfos.push(idOptions);
+                }
+                if (layer.layerControlLayerInfos) {
+                    l.on('load', function (args) {
+                        _LayerControlOptionsHelper._applyLayerControlOptions(args.layer, layer.layerControlLayerInfos);
+                    });
                 }
             }
         },
