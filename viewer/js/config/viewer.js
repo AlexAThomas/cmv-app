@@ -21,7 +21,7 @@ define([
     });*/
 
     // url to your geometry server.
-    esriConfig.defaults.geometryService = new GeometryService(environmentOverride.GeometryServer);
+    esriConfig.defaults.geometryService = new GeometryService(environmentOverride.ArcGISServerRoot + 'Geometry/GeometryServer');
 
     // helper function returning ImageParameters for dynamic layers
     // example:
@@ -45,15 +45,19 @@ define([
     return {
         // used for debugging your app
         isDebug: true,
-
+        ArcGISServerRoot: environmentOverride.ArcGISServerRoot,
+        buildImageParameters: function (config) {
+            return buildImageParameters(config);
+        },
         //default mapClick mode, mapClickMode lets widgets know what mode the map is in to avoid multipult map click actions from taking place (ie identify while drawing).
         defaultMapClickMode: 'identify',
         // map options, passed to map constructor. see: https://developers.arcgis.com/javascript/jsapi/map-amd.html#map1
         mapOptions: {
-            basemap: 'streets',
+            basemap: 'gray',
             center: [-96.59179687497497, 39.09596293629694],
             zoom: 5,
-            sliderStyle: 'small'
+            sliderStyle: 'small',
+            logo: false
         },
         // panes: {
         // 	left: {
@@ -86,7 +90,7 @@ define([
         // operationalLayers: Array of Layers to load on top of the basemap: valid 'type' options: 'dynamic', 'tiled', 'feature'.
         // The 'options' object is passed as the layers options for constructor. Title will be used in the legend only. id's must be unique and have no spaces.
         // 3 'mode' options: MODE_SNAPSHOT = 0, MODE_ONDEMAND = 1, MODE_SELECTION = 2
-        operationalLayers: [{
+        /*operationalLayers: [{
             type: 'feature',
             url: 'http://services1.arcgis.com/6bXbLtkf4y11TosO/arcgis/rest/services/Restaurants/FeatureServer/0',
             title: 'Restaurants',
@@ -159,7 +163,6 @@ define([
                 metadataUrl: true,
                 expanded: true
             }
-        /*
         //examples of vector tile layers (beta in v3.15)
         }, {
             type: 'vectortile',
@@ -216,8 +219,7 @@ define([
                 }]
             }
         */
-        }],
-        // set include:true to load. For titlePane type set position the the desired order in the sidebar
+		// set include:true to load. For titlePane type set position the the desired order in the sidebar
         widgets: {
             growler: {
                 include: true,
