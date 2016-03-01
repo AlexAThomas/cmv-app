@@ -31,24 +31,24 @@ define([
                 this._expandRemove();
             }
             if (this.controlOptions.styleControlWhenEmpty) {
-                this.controlHandler = this.layer.on("graphic-remove", lang.hitch(this, '_handleLayerControlVisibility'))
+                this.controlHandler = this.layer.on('graphic-remove', lang.hitch(this, '_handleLayerControlVisibility'));
                 this._handleLayerControlVisibility();
             }
         },
-        _handleLayerControlVisibility: function() {
-            if (this.layer.graphics.length == 0) {
-                domStyle.set(this.domNode, "fontStyle", "italic");
+        _handleLayerControlVisibility: function () {
+            if (this.layer.graphics.length === 0) {
+                domStyle.set(this.domNode, 'fontStyle', 'italic');
                 this.controlHandler.remove();
-                this.controlHandler = this.layer.on("graphic-add", lang.hitch(this, '_handleLayerControlVisibility'))
+                this.controlHandler = this.layer.on('graphic-add', lang.hitch(this, '_handleLayerControlVisibility'));
             } else {
-                domStyle.set(this.domNode, "fontStyle", "normal");
+                domStyle.set(this.domNode, 'fontStyle', 'normal');
                 this.controlHandler.remove();
-                this.controlHandler = this.layer.on("graphic-remove", lang.hitch(this, '_handleLayerControlVisibility'))
+                this.controlHandler = this.layer.on('graphic-remove', lang.hitch(this, '_handleLayerControlVisibility'));
             }
         },
         destroy: function () {
             this.inherited(arguments);
-            this.controlHandler.remove()
+            this.controlHandler.remove();
         }
     });
     return FeatureControl;
