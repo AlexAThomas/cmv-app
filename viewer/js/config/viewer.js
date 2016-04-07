@@ -318,25 +318,25 @@ define([
                     opacity: 0.30,
                     visible: false,
                     syncBasemapChanges: false,
-					overviewLayers : [{
-						type: 'dynamic',
-						url: 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyOperationalLayers/MapServer',
-						title: 'Louisville Public Safety',
-						options: {
-							id: 'louisvillePubSafety',
-							opacity: 1.0,
-							visible: true,
-							imageParameters: buildImageParameters({
-								layerIds: [0, 2, 4, 5, 8, 10, 12, 21],
-								layerOption: 'show'
-							})
-						},
-						controlOptions: {
-							includeUnspecifiedLayers : true,
-							//excludedLayers : [1,3],
-							subLayerInfos: [{id:0,name:"Layer 1"},{id:2,name:"Layer 2",defaultVisibility:false},{id:4,name:"Layer 3"},{id:5,name:"Layer 4"},{id:8,name:"Layer 5"},{id:9},{id:10},{id:12,name:"Layer 6"},{id:21,name:"Layer 7"}]
-						}
-					}]
+                    overviewLayers: [{
+                        type: 'dynamic',
+                        url: 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyOperationalLayers/MapServer',
+                        title: 'Louisville Public Safety',
+                        options: {
+                            id: 'louisvillePubSafety',
+                            opacity: 1.0,
+                            visible: true,
+                            imageParameters: buildImageParameters({
+                                layerIds: [0, 2, 4, 5, 8, 10, 12, 21],
+                                layerOption: 'show'
+                            })
+                        },
+                        controlOptions: {
+                            includeUnspecifiedLayers: true,
+                            //excludedLayers : [1,3],
+                            subLayerInfos: [{id: 0, name: 'Layer 1'}, {id: 2, name: 'Layer 2', defaultVisibility: false}, {id: 4, name: 'Layer 3'}, {id: 5, name: 'Layer 4'}, {id: 8, name: 'Layer 5'}, {id: 9}, {id: 10}, {id: 12, name: 'Layer 6'}, {id: 21, name: 'Layer 7'}]
+                        }
+                    }]
                 }
             },
             homeButton: {
